@@ -8,6 +8,23 @@ A Docker container that provides:
 
 ## Quick Start
 
+### Option 1: Use Pre-built Image from GitHub Packages
+
+```bash
+# Pull and run the pre-built image
+docker run -d \
+  --name chrome-cdp-novnc \
+  --shm-size=2g \
+  --cap-add=SYS_ADMIN \
+  --security-opt seccomp=unconfined \
+  -p 9222:9222 \
+  -p 6080:6080 \
+  -v $(pwd)/chrome-data:/data/chrome-profile \
+  ghcr.io/${GITHUB_USER}/chrome-container:latest
+```
+
+### Option 2: Build Locally
+
 ```bash
 # Clone or copy these files to a directory, then:
 docker-compose up -d --build
@@ -21,7 +38,7 @@ docker run -d \
   --security-opt seccomp=unconfined \
   -p 9222:9222 \
   -p 6080:6080 \
-  -v $(pwd)/chrome-data:/home/chrome/user-data \
+  -v $(pwd)/chrome-data:/data/chrome-profile \
   chrome-cdp-novnc
 ```
 
@@ -141,7 +158,7 @@ asyncio.get_event_loop().run_until_complete(main())
 
 ## Persistence
 
-Browser data is persisted in `./chrome-data/`:
+Browser data is persisted in `./chrome-data/` (mapped to `/data/chrome-profile` in the container):
 - Cookies
 - localStorage/sessionStorage
 - IndexedDB
@@ -197,9 +214,21 @@ shm_size: "4gb"
 .
 ├── docker-compose.yml   # Docker Compose configuration
 ├── Dockerfile           # Container image definition
-├── supervisord.conf     # Process manager configuration
-├── start.sh             # Chrome startup script
+├── entrypoint.sh        # Container entrypoint script
 └── README.md            # This file
+```
+
+## Automated Builds
+
+This repository includes a GitHub Actions workflow that automatically builds and publishes Docker images to GitHub Packages on every push to `main`.
+
+- **Registry**: `ghcr.io` (GitHub Container Registry)
+- **Image**: `ghcr.io/<username>/chrome-container`
+- **Tags**: `latest`, commit SHA, and branch name
+
+To use the pre-built image:
+```bash
+docker pull ghcr.io/<your-github-username>/chrome-container:latest
 ```
 
 ## Security Notes
