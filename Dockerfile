@@ -16,7 +16,7 @@ RUN apt-get update && apt-get install -y \
     socat \
     dbus-x11 \
     fonts-liberation \
-    libasound2 \
+    libasound2t64 \
     libatk-bridge2.0-0 \
     libatk1.0-0 \
     libatspi2.0-0 \
