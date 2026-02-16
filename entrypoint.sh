@@ -110,7 +110,7 @@ SOCAT_PID=$!
 echo ""
 echo "=== Container Ready ==="
 echo "CDP Endpoint:    http://localhost:9222"
-echo "CDP JSON List:   http://localhost:9222/json/list"  
+echo "CDP JSON List:   http://localhost:9222/json/list"
 echo "noVNC Web:       http://localhost:6080/vnc.html"
 echo ""
 echo "✓ Chrome CDP accessible on port 9222 (via socat proxy)"
